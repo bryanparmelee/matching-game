@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.App {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+   
+    align-items: center;
+    justify-content: center;
+}
+
+.App > button {
+    margin: 20px;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: brown;
+}
+
+.card > img {
+   
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    
+
+}
+
+.notClicked {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: blueviolet;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.board {
+    margin-top: 5vh;
+    width: 80vw;
+    height: 90vh;
+    display: grid;
+    grid: repeat(3, 100px) / repeat(6, 100px);
+    gap: 10px;
+}
+
