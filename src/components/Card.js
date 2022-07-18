@@ -6,13 +6,13 @@ export default function Card(props) {
         <div 
             className="card"
             id={props.id} 
-            onClick={(e) => props.clickHandler(e, props.id)}
+            onClick={props.clickHandler}
         >
             <img
                 
                 alt={props.alt} 
                 src={props.img} />
-            <div className={!props.clicked ? "notClicked" : ""}></div>
+            <div className={!props.clicked ? "" : "notClicked"}></div>
         </div>
     )
 }

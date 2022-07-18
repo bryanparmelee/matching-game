@@ -28,17 +28,14 @@ function App() {
 
   
 
-  const clickHandler = () =>  {
-  
-   
-  }
+
 
 
 
   return (
     <div className="App">
           
-      <button onClick={clickHandler}>Get pic</button>
+      
       {/* <Card img={pic} /> */}
       <Board pics={pics}/>
     </div>

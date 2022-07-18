@@ -10,7 +10,16 @@ export default function Board(props) {
         let array = [...props.pics]
         let doubled = array.concat(array)
         let random = randomizeBoard(doubled)
-        setBoard(random)
+        const newBoard = []
+        for (let i = 0; i < random.length; i++) {
+            newBoard.push({
+                url: random[i],
+                id: nanoid(),
+                clicked: false
+            })
+        }
+
+        setBoard(newBoard)
     }, [props.pics])
 
   
@@ -26,24 +35,25 @@ export default function Board(props) {
         return array
     }
 
-   function clickHandler(e, id) {
-        e.preventDefault()
+   function clickHandler(id) {   
         console.log("You clicked", id)
+       
+        setBoard(prev => prev.map(item => item.id === id ? {...item, clicked: !item.clicked} : item))
        
    }
       
-    const gameBoard = board.map(item => {
+    const gameBoard = board.map(card => {
      
 
         return (
        
         <Card 
-            key={nanoid()}
-            id={nanoid()}
-            clicked={false}
-            clickHandler={clickHandler}
-            img={item} 
-            alt={item.substring(item.lastIndexOf('/') + 1)}
+            key={card.id}
+            id={card.id}
+            clicked={card.clicked}
+            clickHandler={() => clickHandler(card.id)}
+            img={card.url} 
+            alt={card.url.substring(card.url.lastIndexOf('/') + 1)}
         />
     
       
