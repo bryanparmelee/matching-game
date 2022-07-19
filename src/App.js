@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import './app.css';
-import Board from "./components/Board";
+import { nanoid } from "nanoid";
+import Card from "./components/Card";
 
 
 function App() {
  
-  const [pics, setPics] = useState([])
+  const [board, setBoard] = useState([])
 
-
-
-  
-
-  useEffect(() => {
+  function getPics() {
     Promise.all([
       fetch('http://shibe.online/api/cats?count=3&urls=true&httpsUrls=true'),
       fetch('http://shibe.online/api/birds?count=3&urls=true&httpsUrls=true'),
@@ -20,26 +17,60 @@ function App() {
     .then(res => Promise.all(res.map(item => item.json())))
     .then(data => {
       let all = [...data[0], ...data[1], ...data[2]] 
-      setPics(all)
+      let doubled = all.concat(all)
+      let random = randomizeBoard(doubled)
+      let newBoard = random.map(item => ({
+        url: item,
+        id: nanoid(),
+        clicked: false,
+        matched: false
+      }))
+      setBoard(newBoard)
     })  
     .catch(err => console.log(err))
-  }, [])
- 
-
+  }
   
+  useEffect(() => getPics(), [])
+ 
+  function randomizeBoard(array) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+    return array
+}
 
+function clickHandler(id) {   
+  setBoard(prev => prev.map(item => item.id === id ? {...item, clicked: !item.clicked} : item))
 
+}
 
-
+const gameBoard = board.map(card => {
+     
 
   return (
-    <div className="App">
-          
-      
-      {/* <Card img={pic} /> */}
-      <Board pics={pics}/>
+ 
+  <Card 
+      key={card.id}
+      id={card.id}
+      clicked={card.clicked}
+      clickHandler={() => clickHandler(card.id)}
+      img={card.url} 
+      alt={card.url.substring(card.url.lastIndexOf('/') + 1)}
+  />
+
+
+  )
+})
+
+  return (
+    <div className="App">                
+     <div className="board">{gameBoard}</div>
     </div>
-  );
+  )
 }
 
 export default App;

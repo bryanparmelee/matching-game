@@ -12,7 +12,7 @@ export default function Card(props) {
                 
                 alt={props.alt} 
                 src={props.img} />
-            <div className={!props.clicked ? "" : "notClicked"}></div>
+            <div className={props.clicked ? "" : "notClicked"}></div>
         </div>
     )
 }

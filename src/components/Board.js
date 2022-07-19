@@ -15,7 +15,8 @@ export default function Board(props) {
             newBoard.push({
                 url: random[i],
                 id: nanoid(),
-                clicked: false
+                clicked: false,
+                matched: false
             })
         }
 
@@ -36,11 +37,11 @@ export default function Board(props) {
     }
 
    function clickHandler(id) {   
-        console.log("You clicked", id)
-       
         setBoard(prev => prev.map(item => item.id === id ? {...item, clicked: !item.clicked} : item))
-       
+
    }
+
+    
       
     const gameBoard = board.map(card => {
      
