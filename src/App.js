@@ -31,6 +31,14 @@ function App() {
   }
   
   useEffect(() => getPics(), [])
+  useEffect(() => {
+    const allClicked = board.filter(item => item.clicked)
+    if (allClicked.length === 2) {
+      checkMatch(allClicked)
+    } 
+    
+
+  }, [board])
  
   function randomizeBoard(array) {
     let currentIndex = array.length, randomIndex;
@@ -47,6 +55,12 @@ function clickHandler(id) {
   setBoard(prev => prev.map(item => item.id === id ? {...item, clicked: !item.clicked} : item))
 
 }
+
+function checkMatch(array) {
+    array[0].url === array[1].url ? console.log("Match!") :
+    console.log("Try again")
+}
+
 
 const gameBoard = board.map(card => {
      
